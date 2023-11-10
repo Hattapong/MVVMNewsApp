@@ -1,14 +1,17 @@
 package com.androiddevs.mvvmnewsapp.db
 
 import android.content.Context
+import androidx.room.AutoMigration
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
+import androidx.room.migration.AutoMigrationSpec
+import com.androiddevs.mvvmnewsapp.models.Article
 
 @Database(
-    entities = [ArticleDAO::class],
-    version = 1
+    entities = [Article::class],
+    version = 2
 )
 @TypeConverters(Converters::class)
 abstract class ArticleDatabase : RoomDatabase() {
@@ -25,12 +28,13 @@ abstract class ArticleDatabase : RoomDatabase() {
             instance ?: createDatabase(context).also { instance = it }
         }
 
-        private fun createDatabase(context: Context) =
-            Room.databaseBuilder(
-                context.applicationContext,
-                ArticleDatabase::class.java,
-                "Article_db.db"
-            ).build()
+        private fun createDatabase(context: Context) = Room.databaseBuilder(
+            context.applicationContext,
+            ArticleDatabase::class.java,
+            "Article_db.db"
+        ).build()
+
+
     }
 
 }
